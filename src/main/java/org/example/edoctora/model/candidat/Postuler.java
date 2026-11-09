@@ -1,0 +1,32 @@
+package org.example.edoctora.model.candidat;
+
+import org.example.edoctora.model.professeur.Sujet;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "candidat_postuler")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Postuler {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 100)
+    private String pathFile;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean confirmed = false;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "candidat_candidat_fk", nullable = false)
+    private Candidat candidat;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "professeur_sujet_fk", nullable = false)
+    private Sujet sujet;
+}
